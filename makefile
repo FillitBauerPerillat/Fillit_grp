@@ -6,7 +6,7 @@
 #    By: gperilla <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 16:43:17 by gperilla          #+#    #+#              #
-#    Updated: 2017/11/16 17:27:08 by gperilla         ###   ########.fr        #
+#    Updated: 2017/11/20 11:52:51 by tbauer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = fillit
 
 WARNINGS = -Wall -Wextra -Werror
 
-LIB = -L/Users/gperilla/Projets/Mylib -lft
+LIB = -L/Users/tbauer/First_projetcs/Libft -lft
 
 OBJC = main.c lecture.c error.c
 
