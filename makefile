@@ -6,7 +6,7 @@
 #    By: gperilla <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 16:43:17 by gperilla          #+#    #+#              #
-#    Updated: 2017/11/20 11:52:51 by tbauer           ###   ########.fr        #
+#    Updated: 2017/11/20 13:16:28 by gperilla         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,13 @@ NAME = fillit
 
 WARNINGS = -Wall -Wextra -Werror
 
-LIB = -L/Users/tbauer/First_projetcs/Libft -lft
+LIB = -L/Users/gperilla/Projets/Mylib -lft
 
 OBJC = main.c lecture.c error.c
 
 OBJ = $(OBJC:.c=.o)
 
-DEP = $(patsubst %.c, depend/%.d, $(OBJC))
+DEP = $(patsubst %.c, .depend/%.d, $(OBJC))
 
 define OK
 	@tput setaf 255
@@ -47,16 +47,19 @@ $(NAME): $(OBJ)
 debug: $(OBJ)
 	gcc $(LIB) $^ -o $@
 
-%.o: %.c
-	@gcc -MMD -c $(WARNINGSS) $< -o $@ -MF ./depend/$*.d
+%.o: %.c .depend
+	@gcc -MMD -c $(WARNINGSS) $< -o $@ -MF ./.depend/$*.d
 	$(call OK, $*)
+
+.depend:
+	@mkdir -p .depend
 
 clean:
 	@rm -f $(OBJ)
 	@echo 'removed .o'
 
 fclean: clean
-	@rm -f $(NAME) debug $(DEP)
+	@rm -rf $(NAME) debug .depend
 	@echo 'All your base are belong to us'
 
 re: fclean all
