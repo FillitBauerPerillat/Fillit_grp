@@ -13,6 +13,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include "libft.h"
+#include "fillit.h"
 
 static void	copier_c_mal(char **dst, char *src, int nb)
 {
@@ -33,26 +34,27 @@ static void	copier_c_mal(char **dst, char *src, int nb)
 	}
 }
 
-char		**faites_place(char **av)
+void	faites_place(t_env *env, char **av)
 {
-	int		cpt;
 	int		fd;
-	char	**tetri;
 	char	buff[1];
 
+	env->tetri_nbr = 0;
 	if (av == NULL)
-		return (NULL);
+		return ;
 	fd = open(av[1], O_RDONLY);
 	while (read(fd, buff, 1))
 		if (buff[0] == '\n')
-			cpt++;
+			env->tetri_nbr++;
 	close(fd);
-	cpt = (cpt / 5);
-	tetri = (char**)malloc(sizeof(char*) * cpt + 1);
+	env->tetri_nbr = (env->tetri_nbr / 5);
+	env->tetri = (char**)malloc(sizeof(char*) * env->tetri_nbr + 1);
+	if (!(env->tetri = (char**)malloc(sizeof(char*) * env->tetri_nbr + 1)))
+		ft_error("Allocation Error : Insufficient memory");
 	fd = 0;
-	while (fd < cpt)
-		tetri[fd++] = (char*)malloc(sizeof(char) * 22);
-	tetri[cpt] = 0;
-	copier_c_mal(tetri, av[1], cpt);
-	return (tetri);
+	while (fd < env->tetri_nbr)
+		env->tetri[fd++] = (char*)malloc(sizeof(char) * 22);
+	env->tetri[env->tetri_nbr] = 0;
+	copier_c_mal((env->tetri), av[1], env->tetri_nbr);
+	return ;
 }

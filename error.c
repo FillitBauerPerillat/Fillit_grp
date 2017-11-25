@@ -95,8 +95,8 @@ int			c_pas_zelda(char **tetri)
 	return (1);
 }
 
-void		c_foutu(void)
+void	ft_error(char *str)
 {
-	write(1, "error\n", 6);
+	ft_putendl_fd(str, 2);
 	exit(0);
 }
