@@ -6,7 +6,7 @@
 /*   By: gperilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 12:49:45 by gperilla          #+#    #+#             */
-/*   Updated: 2017/11/16 17:23:11 by gperilla         ###   ########.fr       */
+/*   Updated: 2017/11/27 14:22:45 by gperilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,11 @@ void	ds_to_alpha(t_env *env);
 void	on_est_de_gauche_ici(char **str);
 
 void	ft_error(char *str);
+
+int	check_pos(int x, int y,char *piece, char **map);
+
+void reset_map(char ***map, int size);
+
+int			size_map(int n);
 
 #endif
