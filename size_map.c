@@ -1,45 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   size_map.c                                         :+:      :+:    :+:   */
+/*   machin.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbauer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/27 11:35:04 by tbauer            #+#    #+#             */
-/*   Updated: 2017/11/27 11:51:53 by tbauer           ###   ########.fr       */
+/*   Created: 2017/11/27 15:04:19 by tbauer            #+#    #+#             */
+/*   Updated: 2017/11/27 15:06:30 by tbauer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
-#include "libft.h"
-
-static int	ft_sqrt(int nb)
+int		size_map(int nb)
 {
-	int n;
-
-	n = 1;
-	if (nb == 1)
-		return (1);
-	if (nb >= 2)
-	{
-		while ((n * n < nb))
-		{
-			n++;
-		}
-		if (nb % n == 0)
-			return (n);
-	}
-	return (0);
-}
-
-int			size_map(int n)
-{
+	int unefoissurdeux;
+	int incr;
 	int cpt;
+	int ans;
 
-	if (n <= 0)
-		return (0);
-	while (!ft_sqrt(n))
-		n++;
-	cpt = ft_sqrt(n) * 2;
-	return (cpt);
+	unefoissurdeux = 0;
+	incr = 1;
+	cpt = 0;
+	ans = 2;
+	while (nb--)
+	{
+		if (cpt == incr)
+		{
+			cpt = 0;
+			ans++;
+			if (unefoissurdeux++ == 1)
+			{
+				unefoissurdeux = 0;
+				incr++;
+			}
+		}
+		cpt++;
+	}
+	return (ans);
 }
