@@ -6,24 +6,29 @@
 #    By: gperilla <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 16:43:17 by gperilla          #+#    #+#              #
-#    Updated: 2017/11/20 13:16:28 by gperilla         ###   ########.fr        #
+#    Updated: 2017/11/27 15:19:18 by gperilla         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fillit
 
+CC = gcc
+
 WARNINGS = -Wall -Wextra -Werror
 
-LIB = -L/Users/gperilla/Projets/Mylib -lft
+LIB = -I libft/includes -L libft/ -lft
 
-OBJC = main.c lecture.c error.c
+OBJC = main.c error.c lecture.c left4letters.c reset_map.c size_map.c resolv.c
 
 OBJ = $(OBJC:.c=.o)
 
 DEP = $(patsubst %.c, .depend/%.d, $(OBJC))
 
+COLOR = $(shell bash -c 'echo $$RANDOM')
+
 define OK
-	@tput setaf 255
+	@$(eval COLOR=$(shell echo $$(($(COLOR)+1))))
+	@tput setaf $(COLOR)
 	@echo -n $1
 	@tput setaf 10
 	@echo ' [Compiled]'
@@ -31,7 +36,8 @@ define OK
 endef
 
 define ISOK
-	@tput setaf 6
+	@$(eval COLOR=$(shell echo $$(($(COLOR)+1))))
+	@tput setaf $(COLOR)
 	@echo -n $1
 	@tput setaf 10
 	@echo ' [Run it you fool]'
@@ -41,14 +47,12 @@ endef
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@gcc $(WARNINGS) $(LIB) $^ -o $@
+	@make -C libft/
+	@$(CC) $(WARNINGS) $(LIB) $(OBJ) -o $@
 	@$(call ISOK, $@)
 
-debug: $(OBJ)
-	gcc $(LIB) $^ -o $@
-
 %.o: %.c .depend
-	@gcc -MMD -c $(WARNINGSS) $< -o $@ -MF ./.depend/$*.d
+	@gcc -MMD -c $(WARNINGS) $< -o $@ -MF ./.depend/$*.d
 	$(call OK, $*)
 
 .depend:
@@ -59,7 +63,7 @@ clean:
 	@echo 'removed .o'
 
 fclean: clean
-	@rm -rf $(NAME) debug .depend
+	@rm -rf $(NAME) .depend
 	@echo 'All your base are belong to us'
 
 re: fclean all
