@@ -6,7 +6,7 @@
 #    By: gperilla <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 16:43:17 by gperilla          #+#    #+#              #
-#    Updated: 2017/11/27 15:19:18 by gperilla         ###   ########.fr        #
+#    Updated: 2017/11/27 15:53:33 by gperilla         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ WARNINGS = -Wall -Wextra -Werror
 
 LIB = -I libft/includes -L libft/ -lft
 
-OBJC = main.c error.c lecture.c left4letters.c reset_map.c size_map.c resolv.c
+OBJC = main.c error.c lecture.c left4letters.c reset_map.c size_map.c resolv.c\
+	   show_result.c
 
 OBJ = $(OBJC:.c=.o)
 
