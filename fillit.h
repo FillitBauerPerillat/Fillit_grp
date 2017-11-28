@@ -18,6 +18,7 @@ typedef struct	s_env
 	char **tetri;
 	int tetri_nbr;
 	char **map;
+	int size_m;
 }				t_env;
 
 void	faites_place(t_env *env, char **av);
@@ -30,10 +31,16 @@ void	ds_to_alpha(t_env *env);
 
 void	ft_error(char *str);
 
-int		check_pos(int x, int y,char *piece, char **map);
+int		check_pos(int x, int y,char *piece, t_env *env);
 
-void	reset_map(char ***map, int size);
+char	**reset_map(char **map, int size);
 
 int		size_map(int n);
+
+void	show_result(char **map);
+
+int		resolve(t_env *env);
+
+void		a_babord(char *piece);
 
 #endif

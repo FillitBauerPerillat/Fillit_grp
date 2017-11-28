@@ -9,7 +9,6 @@
 /*   Updated: 2017/11/27 15:51:43 by tbauer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "libft.h"
 
 void	show_result(char **map)
@@ -26,6 +25,7 @@ void	show_result(char **map)
 			ft_putchar(map[i][j]);
 			j++;
 		}
+		ft_putchar('\n');
 		i++;
 	}
 }

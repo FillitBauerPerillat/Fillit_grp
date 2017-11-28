@@ -25,7 +25,7 @@ void		ds_to_alpha(t_env *env)
 		while (env->tetri[i][j])
 		{
 			if (env->tetri[i][j] == '#')
-				env->tetri[i][j] = 'A' + i;
+				env->tetri[i][j] = ('A' + i);
 			j++;
 		}
 		i++;
@@ -38,7 +38,7 @@ static void	useless_fct_for_get_25(int *gy, int *iy, int *gx, int *jx)
 	*gx = *jx;
 }
 
-int			check_pos(int x, int y, char *piece, char **map)
+void		a_babord(char *piece)
 {
 	int iy;
 	int jx;
@@ -48,16 +48,48 @@ int			check_pos(int x, int y, char *piece, char **map)
 
 	iy = -1;
 	flag = 0;
-	while (++iy < 5)
+	while (++iy < 4)
 	{
 		jx = -1;
 		while (++jx < 5)
 		{
-			if (piece[iy * 5 + jx] != '.')
+			if (piece[iy * 5 + jx] != '.' && piece[iy * 5 + jx] != '\n')
 			{
 				if (!flag)
+				{
 					useless_fct_for_get_25(&gy, &iy, &gx, &jx);
-				if (map[y + (iy - gy)][x + (jx - gx)] != '.')
+					flag = 1;
+				}
+				piece[(iy - gy) * 5 + (jx - gx)] = '#';
+				piece[iy * 5 + jx] = '.';
+			}
+		}
+	}
+}
+
+int			check_pos(int x, int y, char *piece, t_env *env)
+{
+	int iy;
+	int jx;
+	int flag;
+	int gx;
+	int gy;
+
+	iy = -1;
+	flag = 0;
+	while (++iy < 4)
+	{
+		jx = -1;
+		while (++jx < 5)
+		{
+			if (piece[iy * 5 + jx] != '.' && piece[iy * 5 + jx] != '\n')
+			{
+				if (!flag)
+				{
+					useless_fct_for_get_25(&gy, &iy, &gx, &jx);
+					flag = 1;
+				}
+				if ((y+(iy-gy)) >= env->size_m || (x+(jx-gx)) >= env->size_m ||((y+iy-gy)) < 0 ||(x+(jx-gx)) < 0 || env->map[y + (iy - gy)][x + (jx - gx)] != '.')
 					return (0);
 			}
 		}

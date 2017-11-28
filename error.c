@@ -54,7 +54,7 @@ int			ctoi_l_error(char **av)
 	return (1);
 }
 
-int			compte_les_lainks(char **tetri, int i, int j)
+static int	compte_les_lainks(char **tetri, int i, int j)
 {
 	int cpt;
 

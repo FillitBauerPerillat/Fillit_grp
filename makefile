@@ -14,7 +14,7 @@ NAME = fillit
 
 CC = gcc
 
-WARNINGS = -Wall -Wextra -Werror
+WARNINGS = 
 
 LIB = -I libft/includes -L libft/ -lft
 

@@ -10,74 +10,110 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "fillit.h"
+
+static void	useless_fct_for_get_25(int *gy, int *iy, int *gx, int *jx)
+{
+	*gy = *iy;
+	*gx = *jx;
+}
 
 static void	place_piece(int x, int y, char *piece, char **map)
 {
-	int i;
+	int iy;
+	int jx;
+	int flag;
+	int gx;
+	int gy;
 
-	i = 0;
-	while (i < 20)
+	iy = -1;
+	flag = 0;
+	while (++iy < 4)
 	{
-		if (piece[i] != '.' && piece[i] != '\n')
-			map[x + (i % 5)][y + (i / 5)] = piece[i];
-		i++;
+		jx = -1;
+		while (++jx < 5)
+		{
+			if (piece[iy * 5 + jx] != '.' && piece[iy * 5 + jx] != '\n')
+			{
+				if (!flag)
+				{
+					useless_fct_for_get_25(&gy, &iy, &gx, &jx);
+					flag = 1;
+				}
+				map[y + (iy - gy)][x + (jx - gx)] = piece[iy * 5 + jx];
+			}
+		}
 	}
 }
 
 static void	remove_piece(int x, int y, char *piece, char **map)
 {
-	int i;
+	int iy;
+	int jx;
+	int flag;
+	int gx;
+	int gy;
 
-	i = 0;
-	while (i < 20)
+	iy = -1;
+	flag = 0;
+	while (++iy < 4)
 	{
-		if (piece[i] != '.' && piece[i] != '\n')
-			map[x + (i % 5)][y + (i / 5)] = '.';
-		i++;
+		jx = -1;
+		while (++jx < 5)
+		{
+			if (piece[iy * 5 + jx] != '.' && piece[iy * 5 + jx] != '\n')
+			{
+				if (!flag)
+				{
+					useless_fct_for_get_25(&gy, &iy, &gx, &jx);
+					flag = 1;
+				}
+				map[y + (iy - gy)][x + (jx - gx)] = '.';
+			}
+		}
 	}
 }
 
-static int	next_piece(t_env env, int size, int nb_piece)
+static int	next_piece(t_env *env, int size, int nb_piece)
 {
 	int x;
 	int y;
 
-	if (nb_piece == env.tetri_nbr)
+	if (nb_piece == env->tetri_nbr)
 		return (1);
-	x = 0;
-	while (x < size)
+	y = 0;
+	while (y < size - 1)
 	{
-		y = 0;
-		while (y < size)
+		x = 0;
+		while (x < size)
 		{
-			if (check_pos(x, y, env.tetri[0], env.map))
+			if (check_pos(x, y, env->tetri[nb_piece], env))
 			{
-				place_piece(x, y, env.tetri[0], env.map);
+				place_piece(x, y, env->tetri[nb_piece], env->map);
 				if (next_piece(env, size, (nb_piece + 1)))
 					return (1);
-				remove_piece(x, y, env.tetri[0], env.map);
+				remove_piece(x, y, env->tetri[nb_piece], env->map);
 			}
-			++y;
+			x++;
 		}
-		++x;
+		y++;
 	}
 	return (0);
 }
 
-int			resolve(t_env env)
+int		resolve(t_env *env)
 {
 	int solved;
-	int size;
 
-	size = size_map(env.tetri_nbr);
+	env->size_m = size_map(env->tetri_nbr);
 	solved = 0;
 
 	while (!solved)
 	{
-		reset_map(&env.map, size);
-		solved = next_piece(env, size, 0);
-		size++;
+		env->map = reset_map(env->map, env->size_m);
+		solved = next_piece(env, env->size_m, 0);
+		env->size_m++;
 	}
 	return (1);
 }

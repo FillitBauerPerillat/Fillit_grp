@@ -39,7 +39,7 @@ void	faites_place(t_env *env, char **av)
 	int		fd;
 	char	buff[1];
 
-	env->tetri_nbr = 0;
+	env->tetri_nbr = 1;
 	if (av == NULL)
 		return ;
 	fd = open(av[1], O_RDONLY);
